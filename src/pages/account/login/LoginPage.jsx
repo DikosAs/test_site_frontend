@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
 import AccountAPI from "../../../api/AccountAPI.ts";
 import './login.css'
 
 export default function LoginPage() {
+	const next_page = new URLSearchParams(location.search).get("next")
+
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
@@ -11,7 +12,9 @@ export default function LoginPage() {
 		e.preventDefault()
 
 		if (new AccountAPI().login(username, password) === 200) {
-			document.location.pathname = '/account'
+			if (next_page != null) document.location.pathname = next_page
+			else document.location.pathname = '/account'
+			document.location.search = ""
 		}
 	}
 	

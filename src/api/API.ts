@@ -54,7 +54,7 @@ export default class API {
         try {
           return JSON.parse(req.response)
         } catch (e) {
-          console.error("`request, not return data (data is null)`")
+          console.error(`request, not return data (data is null)`)
           return {}
         }
       } else {

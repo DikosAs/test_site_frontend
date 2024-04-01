@@ -8,7 +8,7 @@ export default class AccountAPI extends API {
   }
 
   status() {
-    return this.request("", "POST")
+    return this.request("", "GET")
   }
 
   login(
@@ -27,5 +27,9 @@ export default class AccountAPI extends API {
 
   logout() {
     this.request("logout", "POST")
+  }
+
+  get_uuid() {
+    return this.request("uuid", "GET")["uuid"]
   }
 }

@@ -1,21 +1,24 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
-import TestsPage from "./pages/test_page/TestsPage.jsx";
 import AccountRoutes from "./pages/account/AccountRoutes.jsx";
-import EditorRoutes from "./pages/editor/EditorRoutes.jsx";
-
+import TestsRoutes from "./pages/test_page/TestsRoutes.jsx";
+import AccountAPI from "./api/AccountAPI.ts";
+import API from "./api/API.ts";
 import './App.css'
+import EditRoutes from "./pages/edit/EditRoutes.jsx";
 
 export default function App() {
+  localStorage.setItem('csrftoken', new API().request('csrf/', 'GET')['csrftoken'])
+  localStorage.setItem('loginStatus', `${new AccountAPI().status()}`)
+
   return (
     <>
       <Header />
       <Routes>
         <Route path={ '/account/*' } element={ <AccountRoutes /> } />
-        <Route path={ '/tests/' } element={ <TestsPage /> } />
-        <Route path={ '/tests/:page' } element={ <TestsPage /> } />
-        <Route path={ '/editor/*' } element={ <EditorRoutes /> } />
-        <Route path={ '*' } element={ <Navigate to="/tests" replace /> } />
+        <Route path={ '/test/*' } element={ <TestsRoutes /> } />
+        <Route path={ '/edit/*' } element={ <EditRoutes /> } />
+        <Route path={ '*' } element={ <Navigate to="/test" replace /> } />
       </Routes>
     </>
   )
