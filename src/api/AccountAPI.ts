@@ -8,13 +8,10 @@ export default class AccountAPI extends API {
   }
 
   status() {
-    return this.request("", "GET")
+    return this.request("", "POST")
   }
 
-  login(
-    login: string,
-    password: string
-  ) {
+  login(login: string, password: string) {
     let params: {[key: string]: any}
     if ("@" in Array(login)) {
       params = {"email": login, "password": password}
@@ -26,10 +23,6 @@ export default class AccountAPI extends API {
   }
 
   logout() {
-    this.request("logout", "POST")
-  }
-
-  get_uuid() {
-    return this.request("uuid", "GET")["uuid"]
+    this.request("logout/", "POST")
   }
 }

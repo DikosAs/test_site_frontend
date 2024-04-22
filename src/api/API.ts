@@ -38,7 +38,7 @@ export default class API {
     // отправляю запрос к backend-у
     let req = new XMLHttpRequest()
 
-    req.open(method, this.url + url + ((method == 'POST') ? '': this.params(params)), false)
+    req.open(method, `${this.url}${url}${((method == 'POST') ? '': this.params(params))}`, false)
     req.setRequestHeader('X-CSRFToken', localStorage.getItem('csrftoken'))
 
     if (method == 'POST') {
@@ -49,19 +49,15 @@ export default class API {
     }
 
     // принимаю данные
-    if (req.status === 200) {
-      if (method === "GET") {
-        try {
-          return JSON.parse(req.response)
-        } catch (e) {
-          console.error(`request, not return data (data is null)`)
-          return {}
-        }
-      } else {
-        return req.status
+    if (req.status >= 200 && req.status < 300 && method == 'GET') {
+      try {
+        return JSON.parse(req.response)
+      } catch (e) {
+        console.error(`request, not return data (data is null)`)
+        return {}
       }
-    } else if (req.status === 0) {
-      return "net::ERR_CONNECTION"
-    } else return req.status
+    }
+
+    return req.status
   }
 }

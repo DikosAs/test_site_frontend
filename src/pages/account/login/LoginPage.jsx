@@ -8,12 +8,18 @@ export default function LoginPage() {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
+	if (parseInt(localStorage.getItem('loginStatus')) === 200) {
+		document.location.pathname = "/account"
+	}
+
 	function submit(e) {
 		e.preventDefault()
 
 		if (new AccountAPI().login(username, password) === 200) {
-			if (next_page != null) document.location.pathname = next_page
-			else document.location.pathname = '/account'
+			if (next_page != null) {
+				document.location.pathname = next_page
+				alert(next_page)
+			}
 			document.location.search = ""
 		}
 	}
