@@ -16,4 +16,5 @@ jobs:
       matrix:
         node-version: [21.x]
     steps:
+    - run: npm install
     - run: npm run build
